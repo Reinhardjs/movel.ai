@@ -15,6 +15,7 @@ import {
 import { SHAPE_TYPES } from "../configs/constants";
 import { Shape } from "../components/Shape";
 import { ShapeProp } from "../props/shapeProp";
+import UrlImage from "../components/UrlImage";
 
 const handleDragOver = (event: any) => {
     console.log("onHandleDragOver")
@@ -25,6 +26,15 @@ export function Canvas() {
     const isDrawing = useStates((state) => state.isDrawing);
     const [drawingShapes, setDrawingShapes] = React.useState<any>([]);
     const [drawingPens, setDrawingPens] = React.useState<any>([]);
+    const [image, setImage] = React.useState({ preview: '', data: '' })
+
+    const handleFileChange = (e: any) => {
+        const img = {
+            preview: URL.createObjectURL(e.target.files[0]),
+            data: e.target.files[0],
+        }
+        setImage(img)
+    }
 
     const handleMouseDown = (e: any) => {
         if (selectedTool !== "select")
@@ -118,7 +128,8 @@ export function Canvas() {
             })
             setDrawingPens([]);
         }
-        return;
+
+        saveDiagram();
     };
 
     const shapes = useStates((state) => Object.entries(state.shapes));
@@ -127,10 +138,6 @@ export function Canvas() {
 
     return (
         <main className="canvas" onDragOver={handleDragOver}>
-            <div className="buttons">
-                <button onClick={saveDiagram}>Save</button>
-                <button onClick={reset}>Reset</button>
-            </div>
             <Stage
                 ref={stageRef}
                 width={window.innerWidth - 400}
@@ -141,6 +148,7 @@ export function Canvas() {
                 onMouseup={handleMouseUp}
             >
                 <Layer>
+                    <UrlImage imageUrl={image.preview} />
                     {shapes.map(([key, shape]) => (
                         <Shape key={key} shape={{ ...(shape as ShapeProp), id: key }} />
                     ))}
@@ -164,6 +172,14 @@ export function Canvas() {
                     ))}
                 </Layer>
             </Stage>
+
+            <div style={{ position: "absolute", top: 0, marginLeft: 30, marginTop: 50 }}>
+                <input type='file' name='file' onChange={handleFileChange}></input>
+            </div>
+            <div className="buttons">
+                {/* <button onClick={saveDiagram}>Save</button> */}
+                <button onClick={reset}>CLEAR</button>
+            </div>
         </main>
     );
 }

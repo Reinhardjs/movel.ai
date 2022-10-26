@@ -37,7 +37,7 @@ export function Palette() {
 
   return (
     <aside className="palette">
-      <h2 style={{ marginTop: 50, marginBottom: 50 }}>Tools</h2>
+      <h2 style={{ marginTop: 14, marginBottom: 50 }}>Tools</h2>
       <div
         onClick={() => {
           selectTool("select")

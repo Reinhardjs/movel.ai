@@ -89,13 +89,12 @@ aside {
 
 .buttons button {
   margin: 4px;
-  height: 30px;
   text-transform: uppercase;
   cursor: pointer;
   background: lightgray;
   transition: all 0.25s ease-in;
   z-index: 10;
-  padding: 0 8px;
+  padding: 25px;
   border-radius: 4px;
 }
 
