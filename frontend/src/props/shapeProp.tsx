@@ -5,6 +5,7 @@ export type ShapeProp = {
     fill: string,
     stroke: string,
     rotation: number,
+    radius: number,
     x: number,
     y: number,
     id: string,
