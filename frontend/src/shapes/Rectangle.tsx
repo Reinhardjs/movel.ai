@@ -2,7 +2,7 @@ import { useRef, useEffect, useCallback } from "react";
 import { Rect as KonvaRectangle, Transformer } from "react-konva";
 
 import { LIMITS } from "../configs/constants";
-import { selectShape, transformRectangleShape, moveShape } from "../utils/stateUtils";
+import { selectShape, transformRectangleShape, moveShape, useStates } from "../utils/stateUtils";
 
 const boundBoxCallbackForRectangle = (oldBox: any, newBox: any) => {
   // limit resize
@@ -18,6 +18,7 @@ const boundBoxCallbackForRectangle = (oldBox: any, newBox: any) => {
 };
 
 export function Rectangle({ id, isSelected, type, ...shapeProps }: { id: string, isSelected: boolean, type: string }) {
+  const isDrawing = useStates((state) => state.isDrawing);
   const shapeRef = useRef<any>();
   const transformerRef = useRef<any>();
 
@@ -59,7 +60,7 @@ export function Rectangle({ id, isSelected, type, ...shapeProps }: { id: string,
         onDragStart={handleSelect}
         ref={shapeRef}
         {...shapeProps}
-        draggable
+        draggable={!isDrawing}
         onDragEnd={handleDrag}
         onTransformEnd={handleTransform}
       />

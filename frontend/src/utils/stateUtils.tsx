@@ -8,19 +8,18 @@ import { StateProp } from "../props/stateProp";
 
 const APP_NAMESPACE = "__integrtr_diagrams__";
 const SHAPES_DATA = APP_NAMESPACE + "SHAPE_DATA";
-const PENS_DATA = APP_NAMESPACE + "PEN_DATA";
 
 const baseState: StateProp = {
+  isDrawing: false,
+  selectedTool: "select",
   selected: null,
   shapes: {},
-  pens: {}
 };
 
 export const useStates = createStore(() => {
   const initialShapesState = JSON.parse(localStorage.getItem(SHAPES_DATA)!);
-  const initialPensState = JSON.parse(localStorage.getItem(PENS_DATA)!);
 
-  return { ...baseState, shapes: initialShapesState ?? {}, pens: initialPensState ?? {} };
+  return { ...baseState, shapes: initialShapesState ?? {} };
 });
 
 const setState = (fn: any) => useStates.set(produce(fn));
@@ -29,19 +28,17 @@ export const saveDiagram = () => {
   const state = useStates.get();
 
   localStorage.setItem(SHAPES_DATA, JSON.stringify(state.shapes));
-  localStorage.setItem(PENS_DATA, JSON.stringify(state.pens));
 };
 
 export const reset = () => {
   localStorage.removeItem(SHAPES_DATA);
-  localStorage.removeItem(PENS_DATA);
 
   useStates.set(baseState);
 };
 
 export const createPen = ({ stroke, points }: { stroke: string, points: Array<any> }) => {
   setState((state: any) => {
-    state.pens[nanoid()] = {
+    state.shapes[nanoid()] = {
       type: PEN_TYPE,
       stroke,
       points
@@ -49,15 +46,23 @@ export const createPen = ({ stroke, points }: { stroke: string, points: Array<an
   })
 }
 
-export const createRectangle = ({ x, y }: { x: any, y: any }) => {
+export const createRectangle = ({ width, height, fill, stroke, rotation, x, y }: {
+  width: number,
+  height: number,
+  fill: string,
+  stroke: string,
+  rotation: number,
+  x: number,
+  y: number,
+}) => {
   setState((state: any) => {
     state.shapes[nanoid()] = {
       type: SHAPE_TYPES.RECT,
-      width: DEFAULTS.RECT.WIDTH,
-      height: DEFAULTS.RECT.HEIGHT,
-      fill: DEFAULTS.RECT.FILL,
-      stroke: DEFAULTS.RECT.STROKE,
-      rotation: DEFAULTS.RECT.ROTATION,
+      width,
+      height,
+      fill,
+      stroke,
+      rotation,
       x,
       y,
     };
@@ -76,6 +81,18 @@ export const createCircle = ({ x, y }: { x: any, y: any }) => {
     };
   });
 };
+
+export const setIsDrawing = (isDrawing: boolean) => {
+  setState((state: any) => {
+    state.isDrawing = isDrawing;
+  })
+}
+
+export const selectTool = (tool: string) => {
+  setState((state: any) => {
+    state.selectedTool = tool;
+  })
+}
 
 export const selectShape = (id: any) => {
   setState((state: any) => {

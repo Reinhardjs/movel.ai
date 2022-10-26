@@ -2,7 +2,7 @@ import { useRef, useEffect, useCallback } from "react";
 import { Circle as KonvaCircle, Transformer } from "react-konva";
 
 import { LIMITS } from "../configs/constants";
-import { selectShape, transformCircleShape, moveShape } from "../utils/stateUtils";
+import { selectShape, transformCircleShape, moveShape, useStates } from "../utils/stateUtils";
 
 const boundBoxCallbackForCircle = (oldBox: any, newBox: any) => {
   if (
@@ -17,6 +17,7 @@ const boundBoxCallbackForCircle = (oldBox: any, newBox: any) => {
 };
 
 export function Circle({ id, isSelected, type, ...shapeProps }: { id: string, isSelected: boolean, type: string }) {
+  const isDrawing = useStates((state) => state.isDrawing);
   const shapeRef = useRef<any>();
   const transformerRef = useRef<any>();
 
@@ -30,7 +31,6 @@ export function Circle({ id, isSelected, type, ...shapeProps }: { id: string, is
   const handleSelect = useCallback(
     (event: any) => {
       event.cancelBubble = true;
-
       selectShape(id);
     },
     [id]
@@ -58,7 +58,7 @@ export function Circle({ id, isSelected, type, ...shapeProps }: { id: string, is
         onDragStart={handleSelect}
         ref={shapeRef}
         {...shapeProps}
-        draggable
+        draggable={!isDrawing}
         onDragEnd={handleDrag}
         onTransformEnd={handleTransform}
       />
