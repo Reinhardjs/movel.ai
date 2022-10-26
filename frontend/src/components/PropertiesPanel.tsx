@@ -1,11 +1,12 @@
 import { useCallback } from "react";
 
-import { useStates, updateAttribute } from "../utils/stateUtils";
+import { useStates, updateAttribute, deleteShape } from "../utils/stateUtils";
 
 const shapeSelector = (state: any) => state.shapes[state.selected];
 
 export function PropertiesPanel() {
   const selectedShape = useStates(shapeSelector);
+  const selectedShapeId = useStates((state) => state.selected);
 
   const updateAttr = useCallback((event: any) => {
     const attr = event.target.name;
@@ -44,6 +45,7 @@ export function PropertiesPanel() {
                 onChange={updateAttr}
               />
             </div>
+            <button onClick={() => { deleteShape((selectedShapeId as string)) }} style={{ marginTop: 30, padding: 20, borderRadius: 20, width: "100%", backgroundColor: "#E74C3C" }}>DELETE</button>
           </>
         ) : (
           <div className="no-data">Nothing is selected</div>

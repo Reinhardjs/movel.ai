@@ -36,6 +36,12 @@ export const reset = () => {
   useStates.set(baseState);
 };
 
+export const deleteShape = (id: string) => {
+  setState((state: any) => {
+    delete state.shapes[id];
+  });
+}
+
 export const createPen = ({ stroke, points }: { stroke: string, points: Array<any> }) => {
   setState((state: any) => {
     state.shapes[nanoid()] = {
@@ -94,6 +100,7 @@ export const selectTool = (tool: string) => {
   setState((state: any) => {
     state.selectedTool = tool;
   })
+  clearSelection();
 }
 
 export const selectShape = (id: any) => {
