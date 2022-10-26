@@ -109,6 +109,7 @@ export function Canvas() {
                     {shapes.map(([key, shape]) => {
                         if ((shape as any).type === PEN_TYPE) return (
                             <Line
+                                draggable={!isDrawing}
                                 key={key}
                                 points={(shape as PenProp).points}
                                 stroke={(shape as PenProp).stroke}
