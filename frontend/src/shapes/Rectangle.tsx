@@ -1,21 +1,7 @@
 import { useRef, useEffect, useCallback } from "react";
 import { Rect as KonvaRectangle, Transformer } from "react-konva";
 
-import { LIMITS } from "../configs/constants";
 import { selectShape, transformRectangleShape, moveShape, useStates } from "../utils/stateUtils";
-
-const boundBoxCallbackForRectangle = (oldBox: any, newBox: any) => {
-  // limit resize
-  if (
-    newBox.width < LIMITS.RECT.MIN ||
-    newBox.height < LIMITS.RECT.MIN ||
-    newBox.width > LIMITS.RECT.MAX ||
-    newBox.height > LIMITS.RECT.MAX
-  ) {
-    return oldBox;
-  }
-  return newBox;
-};
 
 export function Rectangle({ id, isSelected, type, ...shapeProps }: { id: string, isSelected: boolean, type: string }) {
   const isDrawing = useStates((state) => state.isDrawing);
@@ -69,7 +55,6 @@ export function Rectangle({ id, isSelected, type, ...shapeProps }: { id: string,
           anchorSize={5}
           borderDash={[6, 2]}
           ref={transformerRef}
-          boundBoxFunc={boundBoxCallbackForRectangle}
         />
       )}
     </>
