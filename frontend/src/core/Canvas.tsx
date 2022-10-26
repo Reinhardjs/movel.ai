@@ -129,7 +129,7 @@ export function Canvas() {
             setDrawingPens([]);
         }
 
-        saveDiagram();
+        // saveDiagram();
     };
 
     const shapes = useStates((state) => Object.entries(state.shapes));
