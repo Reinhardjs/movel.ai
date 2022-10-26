@@ -4,10 +4,11 @@ import clamp from "clamp";
 import { nanoid } from "nanoid";
 
 import { SHAPE_TYPES, DEFAULTS, LIMITS } from "../configs/constants";
+import { StateProp } from "./stateProp";
 
 const APP_NAMESPACE = "__integrtr_diagrams__";
 
-const baseState = {
+const baseState: StateProp = {
   selected: null,
   shapes: {},
 };

@@ -16,7 +16,7 @@ const boundBoxCallbackForCircle = (oldBox: any, newBox: any) => {
   return newBox;
 };
 
-export function Circle({ id, isSelected, type, ...shapeProps }: { id: any, isSelected: any, type: any }) {
+export function Circle({ id, isSelected, type, ...shapeProps }: { id: string, isSelected: boolean, type: string }) {
   const shapeRef = useRef<any>();
   const transformerRef = useRef<any>();
 

@@ -1,13 +1,15 @@
 import { useCallback } from "react";
 
+import { ShapeProp } from "./shapeProp";
 import { SHAPE_TYPES } from "../configs/constants";
 import { useShapes } from "../data/state";
+import { StateProp } from "../data/stateProp";
 import { Circle } from "../shapes/Circle";
 import { Rectangle } from "../shapes/Rectangle";
 
-export function Shape({ shape }: { shape: any }) {
+export function Shape({ shape }: { shape: ShapeProp }) {
   const isSelectedSelector = useCallback(
-    (state: any) => state.selected === shape.id,
+    (state: StateProp) => state.selected === shape.id,
     [shape]
   );
   const isSelected = useShapes(isSelectedSelector);

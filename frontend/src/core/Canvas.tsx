@@ -11,6 +11,7 @@ import {
 } from "../data/state";
 import { DRAG_DATA_KEY, SHAPE_TYPES } from "../configs/constants";
 import { Shape } from "./Shape";
+import { ShapeProp } from "./shapeProp";
 
 const handleDragOver = (event: any) => event.preventDefault();
 
@@ -61,7 +62,7 @@ export function Canvas() {
             >
                 <Layer>
                     {shapes.map(([key, shape]) => (
-                        <Shape key={key} shape={{ ...(shape as object), id: key }} />
+                        <Shape key={key} shape={{ ...(shape as ShapeProp), id: key }} />
                     ))}
                 </Layer>
             </Stage>
