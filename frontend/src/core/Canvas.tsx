@@ -10,6 +10,7 @@ import {
     createPen,
     setIsDrawing,
     createCircle,
+    createTriangle,
 } from "../utils/stateUtils";
 import { SHAPE_TYPES } from "../configs/constants";
 import { Shape } from "../components/Shape";
@@ -37,6 +38,9 @@ export function Canvas() {
         else if (selectedTool === "circle") {
             setDrawingShapes([{ type: SHAPE_TYPES.CIRCLE, radius: 2, fill: "#CCC", stroke: "#000", x, y }])
         }
+        else if (selectedTool === "triangle") {
+            setDrawingShapes([{ type: SHAPE_TYPES.TRIANGLE, width: 2, height: 2, radius: 1, sides: 3, fill: "#CCC", stroke: "#000", x, y }])
+        }
         else if (selectedTool === "pen") {
             const pos = e.target.getStage().getPointerPosition();
             setDrawingPens([{ points: [pos.x, pos.y], stroke: "#000" }]);
@@ -61,6 +65,14 @@ export function Canvas() {
             let lastCircle = drawingShapes[drawingShapes.length - 1];
             lastCircle.radius = Math.hypot(pos.x - lastCircle.x, pos.y - lastCircle.y);
             drawingShapes.splice(drawingShapes.length - 1, 1, lastCircle)
+            setDrawingShapes(drawingShapes.concat());
+        }
+        else if (selectedTool === "triangle") {
+            let lastTriangle = drawingShapes[drawingShapes.length - 1];
+            lastTriangle.radius = Math.hypot(pos.x - lastTriangle.x, pos.y - lastTriangle.y);
+            lastTriangle.width = lastTriangle.radius * 2;
+            lastTriangle.height = lastTriangle.radius * 2;
+            drawingShapes.splice(drawingShapes.length - 1, 1, lastTriangle)
             setDrawingShapes(drawingShapes.concat());
         }
         else if (selectedTool === "pen") {
@@ -88,6 +100,13 @@ export function Canvas() {
         else if (selectedTool === "circle") {
             let lastShape = drawingShapes[drawingShapes.length - 1];
             createCircle({
+                ...lastShape
+            })
+            setDrawingShapes([]);
+        }
+        else if (selectedTool === "triangle") {
+            let lastShape = drawingShapes[drawingShapes.length - 1];
+            createTriangle({
                 ...lastShape
             })
             setDrawingShapes([]);

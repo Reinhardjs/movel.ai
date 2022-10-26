@@ -90,6 +90,24 @@ export const createCircle = ({ radius, fill, stroke, x, y }: {
   });
 };
 
+export const createTriangle = ({ width, height, sides, radius, fill, stroke, x, y }: {
+  width: number, height: number, sides: number, radius: number, fill: string, stroke: string, x: any, y: any
+}) => {
+  setState((state: any) => {
+    state.shapes[nanoid()] = {
+      type: SHAPE_TYPES.TRIANGLE,
+      width,
+      height,
+      sides,
+      radius,
+      fill,
+      stroke,
+      x,
+      y,
+    };
+  });
+};
+
 export const setIsDrawing = (isDrawing: boolean) => {
   setState((state: any) => {
     state.isDrawing = isDrawing;

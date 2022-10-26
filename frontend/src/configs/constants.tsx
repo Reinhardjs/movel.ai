@@ -18,6 +18,7 @@ export const DEFAULTS = {
 export const SHAPE_TYPES = {
   RECT: "rect",
   CIRCLE: "circle",
+  TRIANGLE: "triangle"
 };
 
 export const DRAG_DATA_KEY = "__drag_data_payload__";

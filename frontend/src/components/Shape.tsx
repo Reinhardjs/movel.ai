@@ -7,6 +7,7 @@ import { StateProp } from "../props/stateProp";
 import { Circle } from "../shapes/Circle";
 import { Rectangle } from "../shapes/Rectangle";
 import { PenLine } from "../shapes/PenLine";
+import { Triangle } from "../shapes/Triangle";
 
 export function Shape({ shape }: { shape: ShapeProp }) {
   const isSelectedSelector = useCallback(
@@ -21,6 +22,8 @@ export function Shape({ shape }: { shape: ShapeProp }) {
     return <Circle {...shape} isSelected={isSelected} />;
   } else if (shape.type === PEN_TYPE) {
     return <PenLine {...shape} isSelected={isSelected} />;
+  } else if (shape.type === SHAPE_TYPES.TRIANGLE) {
+    return <Triangle {...shape} isSelected={isSelected} />;
   }
 
   return null;

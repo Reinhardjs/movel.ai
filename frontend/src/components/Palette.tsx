@@ -1,4 +1,5 @@
 import CSS from "csstype";
+import { Layer, RegularPolygon, Stage } from "react-konva";
 import { DRAG_DATA_KEY, SHAPE_TYPES } from "../configs/constants";
 import { selectTool, useStates } from "../utils/stateUtils";
 
@@ -30,13 +31,13 @@ const handleDragStart = (event: any) => {
 
 export function Palette() {
   const commonStyle: CSS.Properties = {
-    paddingTop: "30px", paddingBottom: "30px", width: "100%", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column"
+    paddingTop: "20px", paddingBottom: "20px", width: "100%", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column"
   }
   const selectedTool = useStates((state) => state.selectedTool);
 
   return (
     <aside className="palette">
-      <h2 style={{ marginTop: 50, marginBottom: 25 }}>Tools</h2>
+      <h2 style={{ marginTop: 50, marginBottom: 50 }}>Tools</h2>
       <div
         onClick={() => {
           selectTool("select")
@@ -87,6 +88,28 @@ export function Palette() {
           draggable
           onDragStart={handleDragStart}
         />
+      </div>
+      <div
+        onClick={() => {
+          selectTool("triangle")
+        }}
+        style={{ backgroundColor: selectedTool === "triangle" ? "#bdc3c7" : "transparent", ...commonStyle }}>
+        <Stage
+          width={100}
+          height={100}
+        >
+          <Layer>
+            <RegularPolygon
+              radius={50}
+              sides={3}
+              x={50}
+              y={50}
+              width={100}
+              height={100}
+              stroke="black"
+            />
+          </Layer>
+        </Stage>
       </div>
     </aside>
   );
