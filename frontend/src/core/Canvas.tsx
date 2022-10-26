@@ -11,7 +11,7 @@ import {
     createPen,
 } from "../utils/stateUtils";
 import { DRAG_DATA_KEY, SHAPE_TYPES } from "../configs/constants";
-import { Shape } from "./Shape";
+import { Shape } from "../components/Shape";
 import { ShapeProp } from "../props/shapeProp";
 import { PenProp } from "../props/penProp";
 
@@ -56,8 +56,6 @@ export function Canvas() {
 
     const shapes = useStates((state) => Object.entries(state.shapes));
     const pens = useStates((state) => Object.entries(state.pens));
-
-    console.log(JSON.stringify(pens))
 
     const stageRef = useRef<any>();
 
