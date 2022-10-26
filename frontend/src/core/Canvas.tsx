@@ -123,24 +123,9 @@ export function Canvas() {
                 onMouseup={handleMouseUp}
             >
                 <Layer>
-                    {shapes.map(([key, shape]) => {
-                        if ((shape as any).type === PEN_TYPE) return (
-                            <Line
-                                draggable={!isDrawing}
-                                key={key}
-                                points={(shape as PenProp).points}
-                                stroke={(shape as PenProp).stroke}
-                                strokeWidth={5}
-                                tension={0.5}
-                                lineCap="round"
-                                lineJoin="round"
-                                globalCompositeOperation={'source-over'}
-                            />
-                        )
-                        else return (
-                            <Shape key={key} shape={{ ...(shape as ShapeProp), id: key }} />
-                        )
-                    })}
+                    {shapes.map(([key, shape]) => (
+                        <Shape key={key} shape={{ ...(shape as ShapeProp), id: key }} />
+                    ))}
                 </Layer>
                 <Layer>
                     {drawingShapes.map((shape: any, i: any) => (

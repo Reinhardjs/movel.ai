@@ -6,6 +6,7 @@ export type ShapeProp = {
     stroke: string,
     rotation: number,
     radius: number,
+    points: Array<any>,
     x: number,
     y: number,
     id: string,
