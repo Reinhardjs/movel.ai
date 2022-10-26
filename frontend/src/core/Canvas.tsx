@@ -11,10 +11,9 @@ import {
     setIsDrawing,
     createCircle,
 } from "../utils/stateUtils";
-import { PEN_TYPE, SHAPE_TYPES } from "../configs/constants";
+import { SHAPE_TYPES } from "../configs/constants";
 import { Shape } from "../components/Shape";
 import { ShapeProp } from "../props/shapeProp";
-import { PenProp } from "../props/penProp";
 
 const handleDragOver = (event: any) => {
     console.log("onHandleDragOver")
