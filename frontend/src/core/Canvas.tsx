@@ -5,7 +5,6 @@ import {
     useStates,
     clearSelection,
     createRectangle,
-    saveDiagram,
     reset,
     createPen,
     setIsDrawing,
@@ -24,6 +23,7 @@ const handleDragOver = (event: any) => {
 export function Canvas() {
     const selectedTool = useStates((state) => state.selectedTool);
     const isDrawing = useStates((state) => state.isDrawing);
+    const [isImageSelected, setIsImageSelected] = React.useState<any>();
     const [drawingShapes, setDrawingShapes] = React.useState<any>([]);
     const [drawingPens, setDrawingPens] = React.useState<any>([]);
     const [image, setImage] = React.useState({ preview: '', data: '' })
@@ -34,6 +34,7 @@ export function Canvas() {
             data: e.target.files[0],
         }
         setImage(img)
+        setIsImageSelected(true);
     }
 
     const handleMouseDown = (e: any) => {
@@ -142,13 +143,16 @@ export function Canvas() {
                 ref={stageRef}
                 width={window.innerWidth - 400}
                 height={window.innerHeight}
-                onClick={clearSelection}
+                onClick={() => {
+                    clearSelection()
+                    setIsImageSelected(false);
+                }}
                 onMouseDown={handleMouseDown}
                 onMousemove={handleMouseMove}
                 onMouseup={handleMouseUp}
             >
                 <Layer>
-                    <UrlImage imageUrl={image.preview} />
+                    <UrlImage imageUrl={image.preview} isImageSelected={isImageSelected} />
                     {shapes.map(([key, shape]) => (
                         <Shape key={key} shape={{ ...(shape as ShapeProp), id: key }} />
                     ))}
@@ -178,6 +182,7 @@ export function Canvas() {
             </div>
             <div className="buttons">
                 {/* <button onClick={saveDiagram}>Save</button> */}
+                <button onClick={() => setIsImageSelected(true)}>TRANSFORM IMAGE</button>
                 <button onClick={reset}>CLEAR</button>
             </div>
         </main>
