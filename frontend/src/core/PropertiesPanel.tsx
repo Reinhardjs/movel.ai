@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 
-import { useShapes, updateAttribute } from "../data/state";
+import { useShapes, updateAttribute } from "../data/stateUtils";
 
 const shapeSelector = (state: any) => state.shapes[state.selected];
 

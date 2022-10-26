@@ -8,10 +8,10 @@ import {
     createRectangle,
     saveDiagram,
     reset,
-} from "../data/state";
+} from "../data/stateUtils";
 import { DRAG_DATA_KEY, SHAPE_TYPES } from "../configs/constants";
 import { Shape } from "./Shape";
-import { ShapeProp } from "./shapeProp";
+import { ShapeProp } from "../props/shapeProp";
 
 const handleDragOver = (event: any) => event.preventDefault();
 

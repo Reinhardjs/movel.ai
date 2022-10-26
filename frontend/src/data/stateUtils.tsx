@@ -1,10 +1,10 @@
 import { createStore } from "@halka/state";
+import { nanoid } from "nanoid";
 import produce from "immer";
 import clamp from "clamp";
-import { nanoid } from "nanoid";
 
 import { SHAPE_TYPES, DEFAULTS, LIMITS } from "../configs/constants";
-import { StateProp } from "./stateProp";
+import { StateProp } from "../props/stateProp";
 
 const APP_NAMESPACE = "__integrtr_diagrams__";
 

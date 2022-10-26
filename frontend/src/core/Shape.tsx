@@ -1,9 +1,9 @@
 import { useCallback } from "react";
 
-import { ShapeProp } from "./shapeProp";
+import { ShapeProp } from "../props/shapeProp";
 import { SHAPE_TYPES } from "../configs/constants";
-import { useShapes } from "../data/state";
-import { StateProp } from "../data/stateProp";
+import { useShapes } from "../data/stateUtils";
+import { StateProp } from "../props/stateProp";
 import { Circle } from "../shapes/Circle";
 import { Rectangle } from "../shapes/Rectangle";
 
