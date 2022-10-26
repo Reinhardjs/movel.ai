@@ -9,6 +9,7 @@ import {
     reset,
     createPen,
     setIsDrawing,
+    createCircle,
 } from "../utils/stateUtils";
 import { PEN_TYPE, SHAPE_TYPES } from "../configs/constants";
 import { Shape } from "../components/Shape";
@@ -34,6 +35,9 @@ export function Canvas() {
         if (selectedTool === "rect") {
             setDrawingShapes([{ type: SHAPE_TYPES.RECT, width: 1, height: 1, fill: "#CCC", stroke: "#000", rotation: 0, x, y }])
         }
+        else if (selectedTool === "circle") {
+            setDrawingShapes([{ type: SHAPE_TYPES.CIRCLE, radius: 2, fill: "#CCC", stroke: "#000", x, y }])
+        }
         else if (selectedTool === "pen") {
             const pos = e.target.getStage().getPointerPosition();
             setDrawingPens([{ points: [pos.x, pos.y], stroke: "#000" }]);
@@ -54,6 +58,12 @@ export function Canvas() {
             drawingShapes.splice(drawingShapes.length - 1, 1, lastRect);
             setDrawingShapes(drawingShapes.concat());
         }
+        else if (selectedTool === "circle") {
+            let lastCircle = drawingShapes[drawingShapes.length - 1];
+            lastCircle.radius = Math.hypot(pos.x - lastCircle.x, pos.y - lastCircle.y);
+            drawingShapes.splice(drawingShapes.length - 1, 1, lastCircle)
+            setDrawingShapes(drawingShapes.concat());
+        }
         else if (selectedTool === "pen") {
             const stage = e.target.getStage();
             const point = stage.getPointerPosition();
@@ -72,6 +82,13 @@ export function Canvas() {
         if (selectedTool === "rect") {
             let lastShape = drawingShapes[drawingShapes.length - 1];
             createRectangle({
+                ...lastShape
+            })
+            setDrawingShapes([]);
+        }
+        else if (selectedTool === "circle") {
+            let lastShape = drawingShapes[drawingShapes.length - 1];
+            createCircle({
                 ...lastShape
             })
             setDrawingShapes([]);

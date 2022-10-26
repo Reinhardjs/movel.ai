@@ -69,13 +69,15 @@ export const createRectangle = ({ width, height, fill, stroke, rotation, x, y }:
   });
 };
 
-export const createCircle = ({ x, y }: { x: any, y: any }) => {
+export const createCircle = ({ radius, fill, stroke, x, y }: {
+  radius: number, fill: string, stroke: string, x: any, y: any
+}) => {
   setState((state: any) => {
     state.shapes[nanoid()] = {
       type: SHAPE_TYPES.CIRCLE,
-      radius: DEFAULTS.CIRCLE.RADIUS,
-      fill: DEFAULTS.CIRCLE.FILL,
-      stroke: DEFAULTS.CIRCLE.STROKE,
+      radius,
+      fill,
+      stroke,
       x,
       y,
     };
