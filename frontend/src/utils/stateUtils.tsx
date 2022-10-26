@@ -1,7 +1,6 @@
 import { createStore } from "@halka/state";
 import { nanoid } from "nanoid";
 import produce from "immer";
-import clamp from "clamp";
 
 import { SHAPE_TYPES, PEN_TYPE } from "../configs/constants";
 import { StateProp } from "../props/stateProp";
