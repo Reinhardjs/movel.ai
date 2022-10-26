@@ -1,9 +1,13 @@
-import './App.css';
+import { Palette } from "./core/Palette";
+import { Canvas } from "./core/Canvas";
+import { PropertiesPanel } from "./core/PropertiesPanel";
 
-const App = () => {
+function App() {
   return (
-    <div className="App">
-      Hello, World!
+    <div className="app">
+      <Palette />
+      <Canvas />
+      <PropertiesPanel />
     </div>
   );
 }
