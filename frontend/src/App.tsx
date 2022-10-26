@@ -1,6 +1,6 @@
-import { Palette } from "./core/Palette";
+import { Palette } from "./components/Palette";
 import { Canvas } from "./core/Canvas";
-import { PropertiesPanel } from "./core/PropertiesPanel";
+import { PropertiesPanel } from "./components/PropertiesPanel";
 
 function App() {
   return (
