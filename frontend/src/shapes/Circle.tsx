@@ -74,7 +74,7 @@ export function Circle({ id, isSelected, type, ...shapeProps }: { id: string, is
             "bottom-right",
             "bottom-left",
           ]}
-          boundBoxFunc={boundBoxCallbackForCircle}
+        // boundBoxFunc={boundBoxCallbackForCircle}
         />
       )}
     </>
