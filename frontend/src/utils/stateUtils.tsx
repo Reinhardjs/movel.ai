@@ -3,35 +3,51 @@ import { nanoid } from "nanoid";
 import produce from "immer";
 import clamp from "clamp";
 
-import { SHAPE_TYPES, DEFAULTS, LIMITS } from "../configs/constants";
+import { SHAPE_TYPES, DEFAULTS, LIMITS, PEN_TYPE } from "../configs/constants";
 import { StateProp } from "../props/stateProp";
 
 const APP_NAMESPACE = "__integrtr_diagrams__";
+const SHAPES_DATA = APP_NAMESPACE + "SHAPE_DATA";
+const PENS_DATA = APP_NAMESPACE + "PEN_DATA";
 
 const baseState: StateProp = {
   selected: null,
   shapes: {},
+  pens: {}
 };
 
-export const useShapes = createStore(() => {
-  const initialState = JSON.parse(localStorage.getItem(APP_NAMESPACE)!);
+export const useStates = createStore(() => {
+  const initialShapesState = JSON.parse(localStorage.getItem(SHAPES_DATA)!);
+  const initialPensState = JSON.parse(localStorage.getItem(PENS_DATA)!);
 
-  return { ...baseState, shapes: initialState ?? {} };
+  return { ...baseState, shapes: initialShapesState ?? {}, pens: initialPensState ?? {} };
 });
 
-const setState = (fn: any) => useShapes.set(produce(fn));
+const setState = (fn: any) => useStates.set(produce(fn));
 
 export const saveDiagram = () => {
-  const state = useShapes.get();
+  const state = useStates.get();
 
-  localStorage.setItem(APP_NAMESPACE, JSON.stringify(state.shapes));
+  localStorage.setItem(SHAPES_DATA, JSON.stringify(state.shapes));
+  localStorage.setItem(PENS_DATA, JSON.stringify(state.pens));
 };
 
 export const reset = () => {
-  localStorage.removeItem(APP_NAMESPACE);
+  localStorage.removeItem(SHAPES_DATA);
+  localStorage.removeItem(PENS_DATA);
 
-  useShapes.set(baseState);
+  useStates.set(baseState);
 };
+
+export const createPen = ({ stroke, points }: { stroke: string, points: Array<any> }) => {
+  setState((state: any) => {
+    state.pens[nanoid()] = {
+      type: PEN_TYPE,
+      stroke,
+      points
+    }
+  })
+}
 
 export const createRectangle = ({ x, y }: { x: any, y: any }) => {
   setState((state: any) => {

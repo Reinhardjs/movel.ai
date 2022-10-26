@@ -1,4 +1,5 @@
 export type StateProp = {
     selected: string | null,
-    shapes: object
+    shapes: object,
+    pens: object,
 }

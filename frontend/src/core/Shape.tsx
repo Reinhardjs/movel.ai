@@ -2,7 +2,7 @@ import { useCallback } from "react";
 
 import { ShapeProp } from "../props/shapeProp";
 import { SHAPE_TYPES } from "../configs/constants";
-import { useShapes } from "../data/stateUtils";
+import { useStates } from "../utils/stateUtils";
 import { StateProp } from "../props/stateProp";
 import { Circle } from "../shapes/Circle";
 import { Rectangle } from "../shapes/Rectangle";
@@ -12,7 +12,7 @@ export function Shape({ shape }: { shape: ShapeProp }) {
     (state: StateProp) => state.selected === shape.id,
     [shape]
   );
-  const isSelected = useShapes(isSelectedSelector);
+  const isSelected = useStates(isSelectedSelector);
 
   if (shape.type === SHAPE_TYPES.RECT) {
     return <Rectangle {...shape} isSelected={isSelected} />;

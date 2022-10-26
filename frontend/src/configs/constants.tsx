@@ -1,3 +1,5 @@
+export const PEN_TYPE = "pen";
+
 export const SHAPE_TYPES = {
   RECT: "rect",
   CIRCLE: "circle",

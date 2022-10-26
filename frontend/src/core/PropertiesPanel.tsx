@@ -1,11 +1,11 @@
 import { useCallback } from "react";
 
-import { useShapes, updateAttribute } from "../data/stateUtils";
+import { useStates, updateAttribute } from "../utils/stateUtils";
 
 const shapeSelector = (state: any) => state.shapes[state.selected];
 
 export function PropertiesPanel() {
-  const selectedShape = useShapes(shapeSelector);
+  const selectedShape = useStates(shapeSelector);
 
   const updateAttr = useCallback((event: any) => {
     const attr = event.target.name;

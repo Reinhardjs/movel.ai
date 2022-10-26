@@ -2,7 +2,7 @@ import { useRef, useEffect, useCallback } from "react";
 import { Circle as KonvaCircle, Transformer } from "react-konva";
 
 import { LIMITS } from "../configs/constants";
-import { selectShape, transformCircleShape, moveShape } from "../data/stateUtils";
+import { selectShape, transformCircleShape, moveShape } from "../utils/stateUtils";
 
 const boundBoxCallbackForCircle = (oldBox: any, newBox: any) => {
   if (

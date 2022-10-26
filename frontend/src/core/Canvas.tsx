@@ -2,28 +2,30 @@ import React, { useRef, useCallback } from "react";
 import { Layer, Line, Stage, Text } from "react-konva";
 
 import {
-    useShapes,
+    useStates,
     clearSelection,
     createCircle,
     createRectangle,
     saveDiagram,
     reset,
-} from "../data/stateUtils";
+    createPen,
+} from "../utils/stateUtils";
 import { DRAG_DATA_KEY, SHAPE_TYPES } from "../configs/constants";
 import { Shape } from "./Shape";
 import { ShapeProp } from "../props/shapeProp";
+import { PenProp } from "../props/penProp";
 
 const handleDragOver = (event: any) => event.preventDefault();
 
 export function Canvas() {
-    const [tool, setTool] = React.useState<any>('pen');
-    const [lines, setLines] = React.useState<any>([]);
+    const [tool, setTool] = React.useState<any>('select');
+    const [drawingPens, setDrawingPens] = React.useState<any>([]);
     const isDrawing = React.useRef(false);
 
     const handleMouseDown = (e: any) => {
         isDrawing.current = true;
         const pos = e.target.getStage().getPointerPosition();
-        setLines([...lines, { tool, points: [pos.x, pos.y] }]);
+        setDrawingPens([{ points: [pos.x, pos.y], stroke: "#000" }]);
     };
 
     const handleMouseMove = (e: any) => {
@@ -33,20 +35,29 @@ export function Canvas() {
         }
         const stage = e.target.getStage();
         const point = stage.getPointerPosition();
-        let lastLine = lines[lines.length - 1];
+        let lastLine = drawingPens[drawingPens.length - 1];
         // add point
         lastLine.points = lastLine.points.concat([point.x, point.y]);
 
         // replace last
-        lines.splice(lines.length - 1, 1, lastLine);
-        setLines(lines.concat());
+        drawingPens.splice(drawingPens.length - 1, 1, lastLine);
+        setDrawingPens(drawingPens.concat());
     };
 
     const handleMouseUp = () => {
         isDrawing.current = false;
+        let lastPen = drawingPens[drawingPens.length - 1];
+        const { stroke, points } = lastPen;
+        createPen({
+            stroke, points
+        })
+        setDrawingPens([]);
     };
 
-    const shapes = useShapes((state) => Object.entries(state.shapes));
+    const shapes = useStates((state) => Object.entries(state.shapes));
+    const pens = useStates((state) => Object.entries(state.pens));
+
+    console.log(JSON.stringify(pens))
 
     const stageRef = useRef<any>();
 
@@ -100,11 +111,23 @@ export function Canvas() {
                 </Layer>
                 <Layer>
                     <Text text="Just start drawing" x={5} y={30} />
-                    {lines.map((line: any, i: any) => (
+                    {drawingPens.map((line: any, i: any) => (
                         <Line
                             key={i}
                             points={line.points}
-                            stroke="#df4b26"
+                            stroke={line.stroke}
+                            strokeWidth={5}
+                            tension={0.5}
+                            lineCap="round"
+                            lineJoin="round"
+                            globalCompositeOperation={'source-over'}
+                        />
+                    ))}
+                    {pens.map(([key, pen]) => (
+                        <Line
+                            key={key}
+                            points={(pen as PenProp).points}
+                            stroke={(pen as PenProp).stroke}
                             strokeWidth={5}
                             tension={0.5}
                             lineCap="round"
