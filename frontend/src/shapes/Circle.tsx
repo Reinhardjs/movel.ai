@@ -1,7 +1,7 @@
 import { useRef, useEffect, useCallback } from "react";
 import { Circle as KonvaCircle, Transformer } from "react-konva";
 
-import { selectShape, transformCircleShape, moveShape, useStates } from "../utils/stateUtils";
+import { selectShape, moveShape, useStates } from "../utils/stateUtils";
 
 export function Circle({ id, isSelected, type, ...shapeProps }: { id: string, isSelected: boolean, type: string }) {
   const isDrawing = useStates((state) => state.isDrawing);
@@ -30,13 +30,6 @@ export function Circle({ id, isSelected, type, ...shapeProps }: { id: string, is
     [id]
   );
 
-  const handleTransform = useCallback(
-    (event: any) => {
-      transformCircleShape(shapeRef.current, id, event);
-    },
-    [id]
-  );
-
   return (
     <>
       <KonvaCircle
@@ -47,7 +40,6 @@ export function Circle({ id, isSelected, type, ...shapeProps }: { id: string, is
         {...shapeProps}
         draggable={!isDrawing}
         onDragEnd={handleDrag}
-        onTransformEnd={handleTransform}
       />
       {isSelected && (
         <Transformer

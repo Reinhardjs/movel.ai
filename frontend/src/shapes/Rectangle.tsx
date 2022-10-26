@@ -1,7 +1,7 @@
 import { useRef, useEffect, useCallback } from "react";
 import { Rect as KonvaRectangle, Transformer } from "react-konva";
 
-import { selectShape, transformRectangleShape, moveShape, useStates } from "../utils/stateUtils";
+import { selectShape, moveShape, useStates } from "../utils/stateUtils";
 
 export function Rectangle({ id, isSelected, type, ...shapeProps }: { id: string, isSelected: boolean, type: string }) {
   const isDrawing = useStates((state) => state.isDrawing);
@@ -10,8 +10,8 @@ export function Rectangle({ id, isSelected, type, ...shapeProps }: { id: string,
 
   useEffect(() => {
     if (isSelected) {
-      transformerRef.current!.nodes([shapeRef.current]);
-      transformerRef.current!.getLayer().batchDraw();
+      transformerRef.current.nodes([shapeRef.current]);
+      transformerRef.current.getLayer().batchDraw();
     }
   }, [isSelected]);
 
@@ -31,13 +31,6 @@ export function Rectangle({ id, isSelected, type, ...shapeProps }: { id: string,
     [id]
   );
 
-  const handleTransform = useCallback(
-    (event: any) => {
-      transformRectangleShape(shapeRef.current, id, event);
-    },
-    [id]
-  );
-
   return (
     <>
       <KonvaRectangle
@@ -48,7 +41,6 @@ export function Rectangle({ id, isSelected, type, ...shapeProps }: { id: string,
         {...shapeProps}
         draggable={!isDrawing}
         onDragEnd={handleDrag}
-        onTransformEnd={handleTransform}
       />
       {isSelected && (
         <Transformer
