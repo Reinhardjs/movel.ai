@@ -1,6 +1,6 @@
 # How to run in local
 
-In the project directory, you can run:
+In the project directory, run the following commands:
 
 ### `npm install`
 
