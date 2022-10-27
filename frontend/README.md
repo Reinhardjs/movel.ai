@@ -7,4 +7,4 @@ In the project directory, you can run:
 ### `npm start`
 
 # App demo
-Go check the deployed demonstration here : [Movel AI Assignment - Deployed Demonstration](https://movel-ai-reinhardjs.netlify.app).
+Go check the deployed demonstration here : [Movel AI Assignment](https://movel-ai-reinhardjs.netlify.app){:target="_blank"}.
